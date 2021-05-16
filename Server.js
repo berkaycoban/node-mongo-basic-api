@@ -79,24 +79,19 @@ router
     });
   })
   .put(async (req, res) => {
-    let response = {};
-
     try {
-      let updateUser = new User(req.body);
+      let query = { username: req.params.name };
+      let update = new User(req.body);
+      let options = { upsert: true };
 
-      // {query, update, options}
-      await User.updateOne({ username: req.params.name }, updateUser, {
-        upsert: true,
-      });
+      await User.updateOne(query, update, options);
 
-      response = {
+      res.status(200).json({
         error: false,
         message: `User update was successful! ${updateUser}`,
-      };
-      res.status(200).json(response);
+      });
     } catch (error) {
-      response = { error: true, message: error };
-      res.status(500).json(response);
+      res.status(500).json({ error: true, message: error });
     }
   })
   .delete(async (req, res) => {
