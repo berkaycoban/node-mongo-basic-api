@@ -24,6 +24,11 @@ router
         response = { error: true, message: "Error fetching data!" };
         res_status = 500;
       } else {
+        // set fullName
+        data.map((item) => {
+          item.fullName = item.name.first + " " + item.name.last;
+        });
+
         response = { error: false, message: data };
       }
       res.status(res_status).json(response);

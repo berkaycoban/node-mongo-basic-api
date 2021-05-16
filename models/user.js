@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     first: String,
     last: String,
   },
+  fullName: String,
 });
 
 module.exports = mongoose.model("User", userSchema);
