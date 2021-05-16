@@ -1,8 +1,10 @@
-let express = require("express");
-let app = express();
+const express = require("express");
+const app = express();
 
-let bodyParser = require("body-parser");
-let router = express.Router();
+const bodyParser = require("body-parser");
+const router = express.Router();
+
+const mongoOp = require("./models/mongo");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
