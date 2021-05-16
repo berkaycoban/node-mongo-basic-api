@@ -13,6 +13,8 @@ router.get("/", (req, res) => {
   res.json({ error: false, message: "Hello World!" });
 });
 
+const setFullName = require("./helpers/setFullName");
+
 router
   .route("/users")
   .get((req, res) => {
@@ -24,10 +26,7 @@ router
         response = { error: true, message: "Error fetching data!" };
         res_status = 500;
       } else {
-        // set fullName
-        data.map((item) => {
-          item.fullName = item.name.first + " " + item.name.last;
-        });
+        setFullName(data);
 
         response = { error: false, message: data };
       }
