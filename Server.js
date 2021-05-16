@@ -57,26 +57,19 @@ router
 
 router
   .route("/user/:name")
-  .get((req, res) => {
-    let response = {};
-    let res_status = 200;
+  .get(async (req, res) => {
+    try {
+      let query = { username: req.params.name };
+      const doc = await User.find(query);
 
-    let query = { username: req.params.name };
-
-    User.find(query, (err, doc) => {
-      if (err) {
-        response = { error: true, message: "Error fetching data!" };
-        res_status = 500;
-      } else if (isEmpty(doc)) {
-        response = { error: true, message: "User not found!" };
-        res_status = 404;
+      if (isEmpty(doc)) {
+        res.status(404).json({ error: true, message: "User not found!" });
       } else {
-        setFullName(doc);
-        response = { error: false, message: doc };
+        res.status(200).json({ error: false, message: doc });
       }
-
-      res.status(res_status).json(response);
-    });
+    } catch (error) {
+      res.status(500).json({ error: true, message: error });
+    }
   })
   .put(async (req, res) => {
     try {
