@@ -98,6 +98,27 @@ router
       response = { error: true, message: error };
       res.status(500).json(response);
     }
+  })
+  .delete((req, res) => {
+    try {
+      User.findOneAndRemove({ username: req.params.name })
+        .then((doc) => {
+          if (doc) {
+            return res
+              .status(200)
+              .json({ error: false, message: "User delete was successful!" });
+          } else {
+            return res
+              .status(404)
+              .json({ error: true, message: "User not found!" });
+          }
+        })
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      res.status(500).send(error);
+    }
   });
 
 app.use(router);
