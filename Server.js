@@ -99,25 +99,21 @@ router
       res.status(500).json(response);
     }
   })
-  .delete((req, res) => {
+  .delete(async (req, res) => {
     try {
-      User.findOneAndRemove({ username: req.params.name })
-        .then((doc) => {
-          if (doc) {
-            return res
-              .status(200)
-              .json({ error: false, message: "User delete was successful!" });
-          } else {
-            return res
-              .status(404)
-              .json({ error: true, message: "User not found!" });
-          }
-        })
-        .catch((error) => {
-          throw error;
-        });
+      let doc = await User.findOneAndRemove({ username: req.params.name });
+
+      if (doc) {
+        return res
+          .status(200)
+          .json({ error: false, message: "User delete was successful!" });
+      } else {
+        return res
+          .status(404)
+          .json({ error: true, message: "User not found!" });
+      }
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).json({ error: true, message: error });
     }
   });
 
