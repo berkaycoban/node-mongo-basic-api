@@ -18,40 +18,31 @@ const isEmpty = require("./helpers/isEmpty");
 
 router
   .route("/users")
-  .get((req, res) => {
-    let response = {};
-    let res_status = 200;
+  .get(async (req, res) => {
+    try {
+      const doc = await User.find();
 
-    User.find((err, doc) => {
-      if (err) {
-        response = { error: true, message: "Error fetching data!" };
-        res_status = 500;
-      } else if (isEmpty(doc)) {
-        response = { error: true, message: "Users not found!" };
-        res_status = 404;
+      if (isEmpty(doc)) {
+        res.status(404).json({ error: true, message: "Users not found!" });
       } else {
         setFullName(doc);
-        response = { error: false, message: doc };
+        res.status(200).json({ error: false, message: doc });
       }
-
-      res.status(res_status).json(response);
-    });
+    } catch (error) {
+      res.status(500).json({ error: true, message: error });
+    }
   })
   .post(async (req, res) => {
     // console.log("req.body.username : " + req.body.username);
     // console.log("req.body.last : " + req.body.name.last);
 
-    let response = {};
-
     try {
       let user = new User(req.body);
       let result = await user.save();
 
-      response = { error: false, message: `User added! ${result}` };
-      res.status(200).json(response);
+      res.status(200).json({ error: false, message: `User added! ${result}` });
     } catch (error) {
-      response = { error: true, message: error };
-      res.status(500).json(response);
+      res.status(500).json({ error: true, message: error });
     }
   });
 
@@ -65,6 +56,7 @@ router
       if (isEmpty(doc)) {
         res.status(404).json({ error: true, message: "User not found!" });
       } else {
+        setFullName(doc);
         res.status(200).json({ error: false, message: doc });
       }
     } catch (error) {
