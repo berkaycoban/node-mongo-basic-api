@@ -55,27 +55,50 @@ router
     }
   });
 
-router.route("/user/:name").get((req, res) => {
-  let response = {};
-  let res_status = 200;
+router
+  .route("/user/:name")
+  .get((req, res) => {
+    let response = {};
+    let res_status = 200;
 
-  let query = { username: req.params.name };
+    let query = { username: req.params.name };
 
-  User.find(query, (err, doc) => {
-    if (err) {
-      response = { error: true, message: "Error fetching data!" };
-      res_status = 500;
-    } else if (isEmpty(doc)) {
-      response = { error: true, message: "User not found!" };
-      res_status = 404;
-    } else {
-      setFullName(doc);
-      response = { error: false, message: doc };
+    User.find(query, (err, doc) => {
+      if (err) {
+        response = { error: true, message: "Error fetching data!" };
+        res_status = 500;
+      } else if (isEmpty(doc)) {
+        response = { error: true, message: "User not found!" };
+        res_status = 404;
+      } else {
+        setFullName(doc);
+        response = { error: false, message: doc };
+      }
+
+      res.status(res_status).json(response);
+    });
+  })
+  .put(async (req, res) => {
+    let response = {};
+
+    try {
+      let updateUser = new User(req.body);
+
+      // {query, update, options}
+      await User.updateOne({ username: req.params.name }, updateUser, {
+        upsert: true,
+      });
+
+      response = {
+        error: false,
+        message: `User update was successful! ${updateUser}`,
+      };
+      res.status(200).json(response);
+    } catch (error) {
+      response = { error: true, message: error };
+      res.status(500).json(response);
     }
-
-    res.status(res_status).json(response);
   });
-});
 
 app.use(router);
 
