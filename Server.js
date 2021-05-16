@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const router = express.Router();
 
-const mongoOp = require("./models/mongo");
+const User = require("./models/user");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,13 +17,16 @@ router
   .route("/users")
   .get((req, res) => {
     let response = {};
-    mongoOp.find({}, (err, data) => {
+    let res_status = 200;
+
+    User.find((err, data) => {
       if (err) {
         response = { error: true, message: "Error fetching data!" };
+        res_status = 500;
       } else {
         response = { error: false, message: data };
       }
-      res.json(response);
+      res.status(res_status).json(response);
     });
   })
   .post(async (req, res) => {
@@ -33,7 +36,7 @@ router
     let response = {};
 
     try {
-      let user = new mongoOp(req.body);
+      let user = new User(req.body);
       let result = await user.save();
 
       response = { error: false, message: `User added! ${result}` };
