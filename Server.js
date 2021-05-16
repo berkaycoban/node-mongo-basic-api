@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
 });
 
 const setFullName = require("./helpers/setFullName");
+const isEmpty = require("./helpers/isEmpty");
 
 router
   .route("/users")
@@ -21,15 +22,18 @@ router
     let response = {};
     let res_status = 200;
 
-    User.find((err, data) => {
+    User.find((err, doc) => {
       if (err) {
         response = { error: true, message: "Error fetching data!" };
         res_status = 500;
+      } else if (isEmpty(doc)) {
+        response = { error: true, message: "Users not found!" };
+        res_status = 404;
       } else {
-        setFullName(data);
-
-        response = { error: false, message: data };
+        setFullName(doc);
+        response = { error: false, message: doc };
       }
+
       res.status(res_status).json(response);
     });
   })
@@ -50,6 +54,28 @@ router
       res.status(500).json(response);
     }
   });
+
+router.route("/user/:name").get((req, res) => {
+  let response = {};
+  let res_status = 200;
+
+  let query = { username: req.params.name };
+
+  User.find(query, (err, doc) => {
+    if (err) {
+      response = { error: true, message: "Error fetching data!" };
+      res_status = 500;
+    } else if (isEmpty(doc)) {
+      response = { error: true, message: "User not found!" };
+      res_status = 404;
+    } else {
+      setFullName(doc);
+      response = { error: false, message: doc };
+    }
+
+    res.status(res_status).json(response);
+  });
+});
 
 app.use(router);
 
