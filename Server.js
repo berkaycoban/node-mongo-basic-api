@@ -4,7 +4,10 @@ const app = express();
 const bodyParser = require("body-parser");
 const router = express.Router();
 
-const User = require("./models/user");
+const connectDB = require("./config/db");
+connectDB();
+
+const User = require("./models/User");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

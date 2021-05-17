@@ -1,4 +1,4 @@
-const mongoose = require("./mongo");
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   gender: { type: String },
@@ -18,7 +18,9 @@ const userSchema = new mongoose.Schema({
   fullName: { type: String },
 });
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
 
 /*
   mongoimport --db people --collection users --jsonArray users.js
