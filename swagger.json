@@ -13,22 +13,15 @@
       "description": "Operations about user"
     }
   ],
-  "schemes": [
-    "https",
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/users": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Get all users",
         "description": "This can only be done get all users",
         "operationId": "getAllUsers",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -45,15 +38,11 @@
         }
       },
       "post": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Create user",
         "description": "This can only be done create a new user",
         "operationId": "createUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -77,15 +66,11 @@
     },
     "/users/{username}": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Get user by user name",
         "description": "This can only be done get user with matched username",
         "operationId": "getUserByUsername",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "username",
@@ -111,15 +96,11 @@
         }
       },
       "put": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Updated user",
         "description": "This can only be done update user with matched username.",
         "operationId": "updateUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "username",
@@ -148,15 +129,11 @@
         }
       },
       "delete": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Delete user",
         "description": "This can only be done delete a user with mathced username.",
         "operationId": "deleteUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "username",
