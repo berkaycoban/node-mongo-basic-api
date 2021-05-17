@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 
 import {
@@ -7,11 +7,11 @@ import {
   getUserByUsername,
   updateUser,
   deleteUser,
-} from "../controllers/User.js";
+} from '../controllers/User.js';
 
-router.route("/").get(getAllUsers).post(createUser);
+router.route('/').get(getAllUsers).post(createUser);
 router
-  .route("/:name")
+  .route('/:name')
   .get(getUserByUsername)
   .put(updateUser)
   .delete(deleteUser);

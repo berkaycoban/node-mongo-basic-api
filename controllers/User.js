@@ -1,7 +1,7 @@
-import User from "../models/User.js";
+import User from '../models/User.js';
 
-import setFullName from "../helpers/setFullName.js";
-import isEmpty from "../helpers/isEmpty.js";
+import setFullName from '../helpers/setFullName.js';
+import isEmpty from '../helpers/isEmpty.js';
 
 // @desc    Get all users
 // @route   GET /users
@@ -11,7 +11,7 @@ const getAllUsers = async (req, res, next) => {
     const doc = await User.find();
 
     if (isEmpty(doc)) {
-      res.status(404).json({ error: true, message: "Users not found!" });
+      res.status(404).json({ error: true, message: 'Users not found!' });
     } else {
       setFullName(doc);
       res.status(200).json({ error: false, message: doc });
@@ -45,7 +45,7 @@ const getUserByUsername = async (req, res) => {
     const doc = await User.find(query);
 
     if (isEmpty(doc)) {
-      res.status(404).json({ error: true, message: "User not found!" });
+      res.status(404).json({ error: true, message: 'User not found!' });
     } else {
       setFullName(doc);
       res.status(200).json({ error: false, message: doc });
@@ -85,9 +85,9 @@ const deleteUser = async (req, res) => {
     if (doc) {
       return res
         .status(200)
-        .json({ error: false, message: "User delete was successful!" });
+        .json({ error: false, message: 'User delete was successful!' });
     } else {
-      return res.status(404).json({ error: true, message: "User not found!" });
+      return res.status(404).json({ error: true, message: 'User not found!' });
     }
   } catch (error) {
     res.status(500).json({ error: true, message: error });
