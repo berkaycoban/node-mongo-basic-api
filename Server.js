@@ -1,4 +1,5 @@
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 const app = express();
 
@@ -7,12 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // db
-const connectDB = require("./config/db");
+import connectDB from "./config/db.js";
 connectDB();
 
 // swagger
-const swaggerUI = require("swagger-ui-express");
-const swaggerDocument = require("./swagger.json");
+import swaggerUI from "swagger-ui-express";
+import swaggerDocument from "./swagger.js";
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
@@ -21,7 +22,7 @@ router.get("/", (req, res) => {
 });
 
 // User router
-const userRouter = require("./routes/User");
+import userRouter from "./routes/User.js";
 
 app.use("/users", userRouter);
 

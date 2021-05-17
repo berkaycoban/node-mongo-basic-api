@@ -6,4 +6,4 @@ const setFullName = (data) => {
   return data;
 };
 
-module.exports = setFullName;
+export default setFullName;

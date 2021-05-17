@@ -1,7 +1,7 @@
-const User = require("../models/User");
+import User from "../models/User.js";
 
-const setFullName = require("../helpers/setFullName");
-const isEmpty = require("../helpers/isEmpty");
+import setFullName from "../helpers/setFullName.js";
+import isEmpty from "../helpers/isEmpty.js";
 
 // @desc    Get all users
 // @route   GET /users
@@ -94,10 +94,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAllUsers,
-  createUser,
-  getUserByUsername,
-  updateUser,
-  deleteUser,
-};
+export { getAllUsers, createUser, getUserByUsername, updateUser, deleteUser };
