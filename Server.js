@@ -1,11 +1,10 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const router = express.Router();
 const app = express();
 
-// body-parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // db
 const connectDB = require("./config/db");
